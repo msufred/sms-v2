@@ -1,30 +1,24 @@
 {
-  "bin": {
-    "sms-v2": "jdeploy-bundle/jdeploy.js"
-  },
-  "author": "",
-  "description": "Parent for JavaFX starter project",
-  "main": "index.js",
-  "preferGlobal": true,
-  "repository": "",
-  "version": "1.0.0",
-  "jdeploy": {
-    "jdk": false,
-    "javaVersion": "17",
-    "jar": "target/sms-v2-1.0.0.jar",
-    "javafx": true,
-    "title": "Sms V2"
-  },
-  "dependencies": {
-    "njre": "^0.2.0",
-    "shelljs": "^0.8.4"
-  },
-  "license": "ISC",
-  "name": "sample2",
-  "files": [
-    "jdeploy-bundle"
-  ],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  }
+    "bin": {"sms-v2": "jdeploy-bundle/jdeploy.js"},
+    "author": "msufred",
+    "description": "Store Management System application for LIVErary IT Solutions",
+    "main": "index.js",
+    "preferGlobal": true,
+    "repository": "",
+    "version": "2.0.0",
+    "jdeploy": {
+        "jdk": false,
+        "javaVersion": "23.0.1",
+        "jar": "target/sms-2.0.0.jar",
+        "javafx": true,
+        "title": "SMS (Store Management System)"
+    },
+    "dependencies": {
+        "njre": "^0.2.0",
+        "shelljs": "^0.8.4"
+    },
+    "license": "ISC",
+    "name": "sms",
+    "files": ["jdeploy-bundle"],
+    "scripts": {"test": "echo \"Error: no test specified\" && exit 1"}
 }

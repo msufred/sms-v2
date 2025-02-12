@@ -1,4 +1,4 @@
-package com.github.msufred.smsv2;
+package com.github.msufred.sms;
 
 public class SystemInfo {
 
