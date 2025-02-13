@@ -8,7 +8,7 @@
     "version": "2.0.0",
     "jdeploy": {
         "jdk": false,
-        "javaVersion": "23.0.1",
+        "javaVersion": "21.0.1",
         "jar": "target/sms-2.0.0.jar",
         "javafx": true,
         "title": "SMS (Store Management System)"

@@ -1,5 +1,6 @@
 package com.github.msufred.sms.views;
 
+import com.github.msufred.sms.views.forms.SalesReceiptForm;
 import io.github.msufred.feathericons.FilePlusIcon;
 import io.github.msufred.feathericons.PrinterIcon;
 import io.github.msufred.feathericons.ZoomInIcon;
@@ -56,6 +57,7 @@ public class PrintWindow extends AbstractWindow {
 
     private StatementForm statementForm;
     private BillingReceiptForm billingReceiptForm;
+    private SalesReceiptForm salesReceiptForm;
     private TermsConditionsForm termsConditionsForm;
 
     private Type mType;
@@ -227,8 +229,8 @@ public class PrintWindow extends AbstractWindow {
                 })).observeOn(JavaFxScheduler.platform()).subscribeOn(Schedulers.io()).subscribe(items -> {
                     progress.setVisible(false);
                     paymentItems = items;
-                    if (billingReceiptForm == null) billingReceiptForm = new BillingReceiptForm();
-                    mForm = billingReceiptForm;
+                    if (salesReceiptForm == null) salesReceiptForm = new SalesReceiptForm();
+                    mForm = salesReceiptForm;
                     fillPaymentReceiptForm();
                 }, err -> {
                     progress.setVisible(false);
