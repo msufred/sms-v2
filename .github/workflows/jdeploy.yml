@@ -19,7 +19,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
           cache: maven
       - name: Build with Maven
@@ -27,7 +27,7 @@ jobs:
       - name: Build App Installer Bundles
         uses: shannah/jdeploy@master
         with:
-          target_repository: 'msufred/sms-v2-releases'
+          target_repository: 'msufred/sms-v2'
           github_token: ${{ secrets.JDEPLOY_RELEASES_TOKEN }}
       - name: Upload Build Artifacts for DMG Action
         if: ${{ vars.JDEPLOY_CREATE_DMG == 'true' }}  # Only needed if creating DMG
@@ -59,7 +59,7 @@ jobs:
       - name: Create DMG and Upload to Release
         uses: shannah/jdeploy-action-dmg@main
         with:
-          target_repository: 'msufred/sms-v2-releases'
+          target_repository: 'msufred/sms-v2'
           github_token: ${{ secrets.JDEPLOY_RELEASES_TOKEN }}
           developer_id: ${{ secrets.MAC_DEVELOPER_ID }}
           # Team ID and cert name only needed if it can't extract from the certifcate for some reason

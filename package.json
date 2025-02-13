@@ -1,17 +1,19 @@
 {
-    "bin": {"sms-v2": "jdeploy-bundle/jdeploy.js"},
+    "bin": {
+        "sms-v2": "jdeploy-bundle/jdeploy.js"
+    },
     "author": "msufred",
-    "description": "Store Management System application for LIVErary IT Solutions",
+    "description": "Store Management System",
     "main": "index.js",
     "preferGlobal": true,
-    "repository": "",
+    "repository": "https://github.com/msufred/sms-v2.git",
     "version": "2.0.0",
     "jdeploy": {
         "jdk": false,
         "javaVersion": "21.0.1",
-        "jar": "target/sms-2.0.0.jar",
+        "jar": "target\\sms-2.0.0.jar",
         "javafx": true,
-        "title": "SMS (Store Management System)"
+        "title": "sms"
     },
     "dependencies": {
         "njre": "^0.2.0",
@@ -19,6 +21,10 @@
     },
     "license": "ISC",
     "name": "sms",
-    "files": ["jdeploy-bundle"],
-    "scripts": {"test": "echo \"Error: no test specified\" && exit 1"}
+    "files": [
+        "jdeploy-bundle"
+    ],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    }
 }
