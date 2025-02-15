@@ -31,7 +31,7 @@ jobs:
           github_token: ${{ secrets.JDEPLOY_RELEASES_TOKEN }}
       - name: Upload Build Artifacts for DMG Action
         if: ${{ vars.JDEPLOY_CREATE_DMG == 'true' }}  # Only needed if creating DMG
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-target
           path: ./target
