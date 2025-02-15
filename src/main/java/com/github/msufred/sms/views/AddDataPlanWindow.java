@@ -3,7 +3,7 @@ package com.github.msufred.sms.views;
 import com.github.msufred.sms.data.DataPlan;
 import com.github.msufred.sms.data.Database;
 import com.github.msufred.sms.data.controllers.DataPlanController;
-import io.github.msufred.feathericons.XCircleIcon;
+import com.github.msufred.sms.views.icons.*;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;

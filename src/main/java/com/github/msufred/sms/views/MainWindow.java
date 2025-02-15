@@ -8,7 +8,7 @@ import com.github.msufred.sms.data.controllers.ScheduleController;
 import com.github.msufred.sms.data.controllers.UserController;
 import com.github.msufred.sms.views.icons.PesoIcon;
 import com.github.msufred.sms.views.panels.*;
-import io.github.msufred.feathericons.*;
+import com.github.msufred.sms.views.icons.*;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;

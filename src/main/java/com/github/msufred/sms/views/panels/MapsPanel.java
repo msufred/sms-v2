@@ -11,7 +11,7 @@ import com.github.msufred.sms.views.cells.TowerTypeTableCell;
 import com.github.msufred.sms.views.panels.maps.LinePainter;
 import com.github.msufred.sms.views.panels.maps.TowerPainter;
 import com.github.msufred.sms.views.panels.maps.TowerPoint;
-import io.github.msufred.feathericons.*;
+import com.github.msufred.sms.views.icons.*;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;

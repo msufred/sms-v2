@@ -18,7 +18,7 @@ import com.github.msufred.sms.views.cells.DateTimeTableCell;
 import com.github.msufred.sms.views.cells.StatusTableCell;
 import com.github.msufred.sms.views.cells.TagTableCell;
 import com.github.msufred.sms.views.icons.PesoIcon;
-import io.github.msufred.feathericons.*;
+import com.github.msufred.sms.views.icons.*;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;

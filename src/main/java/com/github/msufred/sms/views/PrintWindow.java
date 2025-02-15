@@ -1,9 +1,7 @@
 package com.github.msufred.sms.views;
 
 import com.github.msufred.sms.views.forms.SalesReceiptForm;
-import io.github.msufred.feathericons.FilePlusIcon;
-import io.github.msufred.feathericons.PrinterIcon;
-import io.github.msufred.feathericons.ZoomInIcon;
+import com.github.msufred.sms.views.icons.*;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;

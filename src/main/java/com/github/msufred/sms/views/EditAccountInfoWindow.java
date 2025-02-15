@@ -7,7 +7,7 @@ import com.github.msufred.sms.data.Tower;
 import com.github.msufred.sms.data.controllers.AccountController;
 import com.github.msufred.sms.data.controllers.SubscriptionController;
 import com.github.msufred.sms.data.controllers.TowerController;
-import io.github.msufred.feathericons.XCircleIcon;
+import com.github.msufred.sms.views.icons.*;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;

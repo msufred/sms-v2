@@ -1,8 +1,6 @@
 package com.github.msufred.sms.views;
 
-import io.github.msufred.feathericons.FolderIcon;
-import io.github.msufred.feathericons.ZoomInIcon;
-import io.github.msufred.feathericons.ZoomOutIcon;
+import com.github.msufred.sms.views.icons.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;

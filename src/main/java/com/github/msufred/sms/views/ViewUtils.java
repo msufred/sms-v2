@@ -1,6 +1,6 @@
 package com.github.msufred.sms.views;
 
-import io.github.msufred.feathericons.SVGIcon;
+import com.github.msufred.sms.views.icons.SVGIcon;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TextField;

@@ -8,7 +8,7 @@ import com.github.msufred.sms.data.controllers.CashTransactionController;
 import com.github.msufred.sms.views.*;
 import com.github.msufred.sms.views.icons.PesoIcon;
 import com.github.msufred.sms.views.panels.DashboardPanel;
-import io.github.msufred.feathericons.*;
+import com.github.msufred.sms.views.icons.*;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;

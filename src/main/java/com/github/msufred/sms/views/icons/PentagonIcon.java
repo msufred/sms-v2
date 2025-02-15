@@ -1,6 +1,5 @@
 package com.github.msufred.sms.views.icons;
 
-import io.github.msufred.feathericons.SVGIcon;
 import javafx.scene.shape.SVGPath;
 
 public class PentagonIcon extends SVGIcon {

@@ -1,6 +1,6 @@
 package com.github.msufred.sms.views.panels.products_services;
 
-import io.github.msufred.feathericons.*;
+import com.github.msufred.sms.views.icons.*;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;

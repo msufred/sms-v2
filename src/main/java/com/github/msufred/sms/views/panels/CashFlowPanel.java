@@ -7,7 +7,7 @@ import com.github.msufred.sms.data.controllers.ExpenseController;
 import com.github.msufred.sms.data.controllers.RevenueController;
 import com.github.msufred.sms.views.MainWindow;
 import com.github.msufred.sms.views.ViewUtils;
-import io.github.msufred.feathericons.PrinterIcon;
+import com.github.msufred.sms.views.icons.PrinterIcon;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;

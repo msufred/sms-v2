@@ -1,7 +1,7 @@
 package com.github.msufred.sms.views.cells;
 
 import com.github.msufred.sms.views.ViewUtils;
-import io.github.msufred.feathericons.*;
+import com.github.msufred.sms.views.icons.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 

@@ -13,7 +13,7 @@ import com.github.msufred.sms.views.cells.AmountTableCell;
 import com.github.msufred.sms.views.cells.DateTableCell;
 import com.github.msufred.sms.views.cells.StatusTableCell;
 import com.github.msufred.sms.views.cells.TagTableCell;
-import io.github.msufred.feathericons.*;
+import com.github.msufred.sms.views.icons.*;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;

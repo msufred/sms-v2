@@ -13,8 +13,7 @@ import com.github.msufred.sms.views.panels.products_services.ItemStocksViewContr
 import com.github.msufred.sms.views.panels.products_services.JobbingViewController;
 import com.github.msufred.sms.views.panels.products_services.PurchasesViewController;
 import com.github.msufred.sms.views.panels.products_services.ServicesViewController;
-import io.github.msufred.feathericons.ShoppingCartIcon;
-import io.github.msufred.feathericons.ToolIcon;
+import com.github.msufred.sms.views.icons.*;
 import io.reactivex.disposables.CompositeDisposable;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

@@ -1,7 +1,6 @@
 package com.github.msufred.sms.views;
 
-import io.github.msufred.feathericons.UploadIcon;
-import io.github.msufred.feathericons.XCircleIcon;
+import com.github.msufred.sms.views.icons.*;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;

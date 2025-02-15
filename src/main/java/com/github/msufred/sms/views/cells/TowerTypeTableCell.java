@@ -5,7 +5,7 @@ import com.github.msufred.sms.views.icons.CircleFilledIcon;
 import com.github.msufred.sms.views.icons.PentagonIcon;
 import com.github.msufred.sms.views.icons.StarFilledIcon;
 import com.github.msufred.sms.views.icons.TriangleFilledIcon;
-import io.github.msufred.feathericons.SVGIcon;
+import com.github.msufred.sms.views.icons.*;
 import javafx.scene.control.TableCell;
 
 import java.util.Objects;
