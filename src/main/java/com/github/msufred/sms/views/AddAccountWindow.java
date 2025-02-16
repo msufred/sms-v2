@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 public class AddAccountWindow extends AbstractWindow {
 
+    // Source Geo Location (default)
     public static final double LATITUDE = 6.34137;
     public static final double LONGITUDE = 124.72314;
 
@@ -36,7 +37,6 @@ public class AddAccountWindow extends AbstractWindow {
     // subscription group
     @FXML private CheckBox cbAddSubscription;
     @FXML private ComboBox<DataPlan> cbDataPlans;
-    @FXML private Button btnAdd;
     @FXML private TextField tfBandwidth;
     @FXML private TextField tfIpAddress;
     @FXML private TextField tfAmount;
@@ -70,8 +70,6 @@ public class AddAccountWindow extends AbstractWindow {
     private final SubscriptionController subscriptionController;
     private final TowerController towerController;
     private final CompositeDisposable disposables;
-
-    private AddDataPlanWindow addDataPlanWindow;
 
     // accountNo validation icons
     private final XCircleIcon xCircleIcon = new XCircleIcon(14);
@@ -119,12 +117,6 @@ public class AddAccountWindow extends AbstractWindow {
                 Tower.TYPE_SOURCE, Tower.TYPE_DEFAULT, Tower.TYPE_RELAY, Tower.TYPE_ACCESS_POINT
         ));
         cbTowerTypes.setValue(Tower.TYPE_DEFAULT);
-
-        btnAdd.setOnAction(evt -> {
-            if (addDataPlanWindow == null) addDataPlanWindow = new AddDataPlanWindow(database, getStage());
-            addDataPlanWindow.showAndWait();
-            refreshDataPlans();
-        });
 
         btnSave.setOnAction(evt -> validateAndSave());
         btnCancel.setOnAction(evt -> close());
@@ -277,6 +269,7 @@ public class AddAccountWindow extends AbstractWindow {
 
     private Tower getTowerInfo() {
         Tower tower = new Tower();
+        tower.setName(ViewUtils.normalize(tfName.getText()));
         tower.setType(cbTowerTypes.getValue());
         String latStr = tfLatitude.getText();
         tower.setLatitude(latStr.isBlank() ? 0.0f : Float.parseFloat(latStr.trim()));
@@ -301,7 +294,6 @@ public class AddAccountWindow extends AbstractWindow {
     }
 
     private void setupIcons() {
-        btnAdd.setGraphic(new PlusIcon(14));
         lblErrName.setGraphic(new XCircleIcon(14));
         lblErrAddress.setGraphic(new XCircleIcon(14));
         lblErrPlanType.setGraphic(new XCircleIcon(14));
@@ -341,7 +333,6 @@ public class AddAccountWindow extends AbstractWindow {
     }
 
     public void dispose() {
-        if (addDataPlanWindow != null) addDataPlanWindow.dispose();
         disposables.dispose();
     }
 }
