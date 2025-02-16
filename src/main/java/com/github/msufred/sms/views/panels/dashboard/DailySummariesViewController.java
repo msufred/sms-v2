@@ -30,8 +30,8 @@ import java.util.Comparator;
 
 public class DailySummariesViewController {
 
-    private Button btnExport, btnRecalculate;
-    private TableView<DailySummary> tableView;
+    private final Button btnExport, btnRecalculate;
+    private final TableView<DailySummary> tableView;
 
     private final DashboardPanel dashboardPanel;
     private final MainWindow mainWindow;
