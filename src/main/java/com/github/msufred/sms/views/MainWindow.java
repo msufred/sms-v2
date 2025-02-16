@@ -2,6 +2,7 @@ package com.github.msufred.sms.views;
 
 import com.github.msufred.sms.AppMain;
 import com.github.msufred.sms.Settings;
+import com.github.msufred.sms.Utils;
 import com.github.msufred.sms.data.Database;
 import com.github.msufred.sms.data.User;
 import com.github.msufred.sms.data.controllers.ScheduleController;
@@ -85,7 +86,7 @@ public class MainWindow extends AbstractWindow {
     private boolean isLogout = false;
 
     public MainWindow(AppMain appMain, Settings settings, Database database, Stage stage) {
-        super("SMS", MainWindow.class.getResource("main.fxml"), stage, null);
+        super("SMS " + Utils.VERSION, MainWindow.class.getResource("main.fxml"), stage, null);
         this.appMain = appMain;
         this.settings = settings;
         this.database = database;
