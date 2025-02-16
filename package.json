@@ -3,24 +3,24 @@
         "sms-v2": "jdeploy-bundle/jdeploy.js"
     },
     "author": "msufred",
-    "description": "Store Management System",
+    "description": "Store Management System application for LIVErary IT Solutions (C)",
     "main": "index.js",
     "preferGlobal": true,
     "repository": "https://github.com/msufred/sms-v2.git",
-    "version": "2.0.0",
+    "version": "2.0.0-SNAPSHOT",
     "jdeploy": {
-        "jdk": false,
-        "javaVersion": "21.0.1",
-        "jar": "target\\sms-2.0.0.jar",
+        "jdk": true,
+        "javaVersion": "21",
+        "jar": "target\\sms_2.0.0-SNAPSHOT.jar",
         "javafx": true,
-        "title": "sms"
+        "title": "Store Management System 2.0"
     },
     "dependencies": {
         "njre": "^0.2.0",
         "shelljs": "^0.8.4"
     },
     "license": "ISC",
-    "name": "sms",
+    "name": "sms-v2",
     "files": [
         "jdeploy-bundle"
     ],
