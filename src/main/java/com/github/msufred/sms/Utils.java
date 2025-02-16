@@ -3,6 +3,8 @@ package com.github.msufred.sms;
 import java.nio.file.FileSystems;
 
 public final class Utils {
+
+    public static final String VERSION = "2.0.0-SNAPSHOT";
     public static final String USER_HOME = System.getProperty("user.home");
     public static final String FILE_SEPARATOR = FileSystems.getDefault().getSeparator();
 
