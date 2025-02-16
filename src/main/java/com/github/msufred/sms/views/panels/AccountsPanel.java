@@ -218,21 +218,9 @@ public class AccountsPanel extends AbstractPanel {
         if (selectedItem.get() == null) {
             showWarningDialog("Invalid", "No selected Account. Try again.");
         } else {
-            showProgress("Checking subscription...");
-            disposables.add(Single.fromCallable(() -> subscriptionController.hasSubscription(selectedItem.get().getAccountNo()))
-                    .subscribeOn(Schedulers.io()).observeOn(JavaFxScheduler.platform()).subscribe(hasSub -> {
-                        hideProgress();
-                        if (hasSub) {
-                            if (editSubscriptionWindow == null) editSubscriptionWindow = new EditSubscriptionWindow(database, mainWindow.getStage());
-                            editSubscriptionWindow.showAndWait(selectedItem.get().getAccountNo());
-                            refresh();
-                        } else {
-                            showInfoDialog("Invalid Action", "Subscription for this account does not exist.");
-                        }
-                    }, err -> {
-                        hideProgress();
-                        showErrorDialog("Database Error", "Error while checking Subscription.\n" + err);
-                    }));
+            if (editSubscriptionWindow == null) editSubscriptionWindow = new EditSubscriptionWindow(database,  mainWindow.getStage());
+            editSubscriptionWindow.showAndWait(selectedItem.get().getAccountNo());
+            refresh();
         }
     }
 
@@ -248,6 +236,7 @@ public class AccountsPanel extends AbstractPanel {
                             if (editTowerWindow == null) editTowerWindow = new EditTowerWindow(database, mainWindow.getStage());
                             editTowerWindow.showAndWait(selectedItem.get().getAccountNo());
                         } else {
+                            showInfoDialog("Invalid", "This account has no Tower info. Create new.");
                             if (addTowerWindow == null) addTowerWindow = new AddTowerWindow(database, mainWindow.getStage());
                             addTowerWindow.showAndWait();
                         }
