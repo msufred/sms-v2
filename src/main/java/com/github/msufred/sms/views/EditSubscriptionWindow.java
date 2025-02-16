@@ -58,8 +58,18 @@ public class EditSubscriptionWindow extends AbstractWindow {
         ViewUtils.setAsIntegerTextField(tfBandwidth);
         ViewUtils.setAsNumericalTextField(tfAmount);
 
+        cbDataPlans.valueProperty().addListener((o, oldVal, newVal) -> {
+            if (newVal != null) {
+                tfBandwidth.setText(newVal.getSpeed() + "");
+                tfAmount.setText(String.format("%.2f", newVal.getMonthlyFee()));
+            }
+        });
+
         btnSave.setOnAction(evt -> {
-            if (validated()) saveAndClose();
+            if (validated()) {
+                if (mSubscription != null) updateAndClose();
+                else saveAndClose();
+            }
         });
         btnCancel.setOnAction(evt -> close());
     }
@@ -84,16 +94,21 @@ public class EditSubscriptionWindow extends AbstractWindow {
                 }).subscribeOn(Schedulers.io()).observeOn(JavaFxScheduler.platform()).subscribe(subscription -> {
                     progressBar.setVisible(false);
                     mSubscription = subscription;
-                    fillupFields();
+                    cbDataPlans.setItems(mPlans);
+                    fillUpFields();
                 }, err -> {
                     progressBar.setVisible(false);
-                    showErrorDialog("Database Error", "Error or no Subscription found:\n" + err);
+                    mSubscription = null;
+                    cbDataPlans.setItems(mPlans);
+                    fillUpFields();
+                    System.err.println("Database Error:\n" + err);
+                    // showErrorDialog("Database Error", "Error or no Subscription found!");
                 }));
     }
 
-    private void fillupFields() {
-        if (mPlans != null && mSubscription != null) {
-            cbDataPlans.setItems(mPlans);
+    private void fillUpFields() {
+        // fill up fields (if not null)
+        if (mSubscription != null) {
             DataPlan plan = null;
             for (DataPlan p : mPlans) {
                 if (p.getName().equals(mSubscription.getPlanType())) {
@@ -118,10 +133,35 @@ public class EditSubscriptionWindow extends AbstractWindow {
         lblErrPlanType.setVisible(cbDataPlans.getValue() == null);
         lblErrStartDate.setVisible(dpStart.getValue() == null);
         lblErrEndDate.setVisible(dpEnd.getValue() == null);
+
         return cbDataPlans.getValue() != null && dpStart.getValue() != null && dpEnd != null;
     }
 
     private void saveAndClose() {
+        progressBar.setVisible(true);
+        disposables.add(Single.fromCallable(() -> {
+            Subscription subscription = new Subscription();
+            subscription.setAccountNo(mAccountNo);
+            subscription.setPlanType(cbDataPlans.getValue().getName());
+            String speedStr = tfBandwidth.getText().trim();
+            subscription.setSpeed(speedStr.isBlank() ? 0 : Integer.parseInt(speedStr));
+            String amountStr = tfAmount.getText().trim();
+            subscription.setMonthlyFee(amountStr.isBlank() ? 0.0 : Double.parseDouble(amountStr));
+            subscription.setIpAddress(ViewUtils.normalize(tfIpAddress.getText()));
+            subscription.setStartDate(dpStart.getValue());
+            subscription.setEndDate(dpEnd.getValue());
+            return subscriptionController.insert(subscription);
+        }).subscribeOn(Schedulers.io()).observeOn(JavaFxScheduler.platform()).subscribe(success -> {
+            progressBar.setVisible(false);
+            if (!success) showWarningDialog("Failed", "Failed to save Subscription entry.");
+            close();
+        }, err -> {
+            progressBar.setVisible(false);
+            showErrorDialog("Database Error", "Error while saving Subscription entry.\n" + err);
+        }));
+    }
+
+    private void updateAndClose() {
         progressBar.setVisible(true);
         disposables.add(Single.fromCallable(() -> {
             mSubscription.setPlanType(cbDataPlans.getValue().getName());
