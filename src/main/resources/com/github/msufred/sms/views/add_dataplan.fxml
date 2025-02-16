@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="8.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox spacing="8.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER_LEFT" spacing="8.0">
          <children>
@@ -24,14 +24,14 @@
       <HBox alignment="CENTER_LEFT" spacing="8.0">
          <children>
             <Label minWidth="100.0" styleClass="form-label" text="Speed (MB)" />
-            <TextField fx:id="tfBandwidth" styleClass="form-field" text="0" />
+            <TextField fx:id="tfBandwidth" promptText="Required" styleClass="form-field" text="0" />
             <Label fx:id="lblErrSpeed" styleClass="label-error" />
          </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" spacing="8.0">
          <children>
             <Label minWidth="100.0" styleClass="form-label" text="Monthly Fee" />
-            <TextField fx:id="tfAmount" styleClass="form-field" text="0.0" />
+            <TextField fx:id="tfAmount" promptText="Required" styleClass="form-field" text="0.0" />
             <Label fx:id="lblErrFee" styleClass="label-error" />
          </children>
       </HBox>
