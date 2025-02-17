@@ -1,7 +1,5 @@
 {
-    "bin": {
-        "sms-v2": "jdeploy-bundle/jdeploy.js"
-    },
+    "bin": {"sms-v2": "jdeploy-bundle/jdeploy.js"},
     "author": "msufred",
     "description": "Store Management System for LIVErary IT Solutions (c)",
     "main": "index.js",
@@ -9,7 +7,7 @@
     "repository": "https://github.com/msufred/sms-v2",
     "version": "2.0.0-SNAPSHOT",
     "jdeploy": {
-        "jdk": true,
+        "jdk": false,
         "installers": [
             "mac-x64",
             "win"
@@ -29,10 +27,6 @@
     },
     "license": "ISC",
     "name": "sms",
-    "files": [
-        "jdeploy-bundle"
-    ],
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    }
+    "files": ["jdeploy-bundle"],
+    "scripts": {"test": "echo \"Error: no test specified\" && exit 1"}
 }
