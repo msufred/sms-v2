@@ -31,6 +31,8 @@ import java.util.Optional;
 
 public class AccountsPanel extends AbstractPanel {
 
+    private static final String DEBUG_NAME = "AccountsPanel";
+
     @FXML private TabPane tabPane;
     @FXML private Tab tabAccounts;
     @FXML private Tab tabPlans;
@@ -173,20 +175,22 @@ public class AccountsPanel extends AbstractPanel {
 
     private void refresh() {
         showProgress("Retrieving Accounts...");
+        mainWindow.printDebug(DEBUG_NAME, "Retrieving Account entries...");
         disposables.add(Single.fromCallable(accountController::getAccountsWithSubscription)
                 .subscribeOn(Schedulers.io()).observeOn(JavaFxScheduler.platform()).subscribe(list -> {
                     hideProgress();
                     filteredList = new FilteredList<>(list);
-                    // TODO clear filters
                     accountsTable.setItems(filteredList);
                 }, err -> {
                     hideProgress();
-                    showErrorDialog("Database Error", "Error while retrieving Account list.\n" + err);
+                    mainWindow.printErr(DEBUG_NAME, "Error while retrieving Account entries.", err);
+                    showErrorDialog("Database Error", "Error while retrieving Account entries.\n" + err);
                 }));
     }
 
     private void refreshPlans() {
         showProgress("Retrieving Data Plan entries...");
+        mainWindow.printDebug(DEBUG_NAME, "Retrieving accounts...");
         disposables.add(Single.fromCallable(dataPlanController::getAll)
                 .subscribeOn(Schedulers.io()).observeOn(JavaFxScheduler.platform()).subscribe(list -> {
                     hideProgress();
@@ -194,12 +198,13 @@ public class AccountsPanel extends AbstractPanel {
                     dataPlansTable.setItems(dataPlanList);
                 }, err -> {
                     hideProgress();
+                    mainWindow.printErr(DEBUG_NAME, "Error while retrieving DataPlan entries.", err);
                     showErrorDialog("Database Error", "Error while retrieving Data Plan entries.\n" + err);
                 }));
     }
 
     private void addItem() {
-        if (addAccountWindow == null) addAccountWindow = new AddAccountWindow(database, mainWindow.getStage());
+        if (addAccountWindow == null) addAccountWindow = new AddAccountWindow(database, mainWindow);
         addAccountWindow.showAndWait();
         refresh();
     }
@@ -229,6 +234,7 @@ public class AccountsPanel extends AbstractPanel {
             showWarningDialog("Invalid", "No selected Account. Try again.");
         } else {
             showProgress("Checking Tower info...");
+            mainWindow.printDebug(DEBUG_NAME, "Checking Tower info...");
             disposables.add(Single.fromCallable(() -> towerController.hasTower(selectedItem.get().getAccountNo()))
                     .subscribeOn(Schedulers.io()).observeOn(JavaFxScheduler.platform()).subscribe(hasTower -> {
                         hideProgress();
@@ -242,6 +248,7 @@ public class AccountsPanel extends AbstractPanel {
                         }
                         refresh();
                     }, err -> {
+                        mainWindow.printErr(DEBUG_NAME, "Error while checking Tower info.", err);
                         showErrorDialog("Database Error", "Error while checking Tower info.\n" + err);
                     }));
         }
@@ -262,13 +269,20 @@ public class AccountsPanel extends AbstractPanel {
 
     private void delete(int id) {
         showProgress("Deleting Account...");
+        mainWindow.printDebug(DEBUG_NAME, "Deleting Account...");
         disposables.add(Single.fromCallable(() -> accountController.delete(id))
                 .subscribeOn(Schedulers.io()).observeOn(JavaFxScheduler.platform()).subscribe(success -> {
                     hideProgress();
                     refresh();
-                    if (!success) showWarningDialog("Failed", "Failed to delete Account entry.");
+                    if (!success) {
+                        mainWindow.printWarning(DEBUG_NAME, "Failed to delete Account entry.");
+                        showWarningDialog("Failed", "Failed to delete Account entry.");
+                    } else {
+                        mainWindow.printDebug(DEBUG_NAME, "Deleted Account successfully.");
+                    }
                 }, err -> {
                     hideProgress();
+                    mainWindow.printErr(DEBUG_NAME, "Error while deleting Account entry.", err);
                     showErrorDialog("Database Error", "Error while deleting Account.\n" + err);
                 }));
     }
@@ -332,13 +346,20 @@ public class AccountsPanel extends AbstractPanel {
 
     private void deletePlan(int id) {
         showProgress("Deleting Data Plan entry...");
+        mainWindow.printDebug(DEBUG_NAME, "Deleting DataPlan entry...");
         disposables.add(Single.fromCallable(() -> dataPlanController.delete(id))
                 .subscribeOn(Schedulers.io()).observeOn(JavaFxScheduler.platform()).subscribe(success -> {
                     hideProgress();
-                    if (!success) showWarningDialog("Failed", "Failed to delete Data Plan entry.");
+                    if (!success) {
+                        mainWindow.printWarning(DEBUG_NAME, "Failed to delete DataPlan entry.");
+                        showWarningDialog("Failed", "Failed to delete Data Plan entry.");
+                    } else {
+                        mainWindow.printDebug(DEBUG_NAME, "DataPlan deleted successfully.");
+                    }
                     refreshPlans();
                 }, err -> {
                     hideProgress();
+                    mainWindow.printErr(DEBUG_NAME, "Error while deleting DataPlan entry.", err);
                     showErrorDialog("Database Error", "Error while deleting Data Plan entry.\n" + err);
                 }));
     }
@@ -347,14 +368,21 @@ public class AccountsPanel extends AbstractPanel {
         if (selectedPlan.get() == null) {
             showWarningDialog("Invalid Action", "No selected DataPlan entry. Try again.");
         } else {
-            showProgress("Upading Data Plan entry...");
+            showProgress("Updating Data Plan entry...");
+            mainWindow.printDebug(DEBUG_NAME, "Updating DataPlan entry...");
             disposables.add(Single.fromCallable(() -> dataPlanController.update(selectedPlan.get().getId(), "tag", tag))
                     .subscribeOn(Schedulers.io()).observeOn(JavaFxScheduler.platform()).subscribe(success -> {
                         hideProgress();
-                        if (!success) showWarningDialog("Failed", "Failed to update Data Plan entry.");
+                        if (!success) {
+                            mainWindow.printWarning(DEBUG_NAME, "Failed to update DataPlan entry.");
+                            showWarningDialog("Failed", "Failed to update Data Plan entry.");
+                        } else {
+                            mainWindow.printDebug(DEBUG_NAME, "DataPlan updated successfully.");
+                        }
                         refreshPlans();
                     }, err -> {
                         hideProgress();
+                        mainWindow.printErr(DEBUG_NAME, "Error while updating DataPlan entry.", err);
                         showErrorDialog("Database Error", "Error while updating Data Plan entry.\n" + err);
                     }));
         }
@@ -511,6 +539,7 @@ public class AccountsPanel extends AbstractPanel {
 
     @Override
     public void onDispose() {
+        mainWindow.printWarning(DEBUG_NAME, "Disposing...");
         if (addAccountWindow != null) addAccountWindow.dispose();
         if (editAccountInfoWindow != null) editAccountInfoWindow.dispose();
         if (addTowerWindow != null) addTowerWindow.dispose();

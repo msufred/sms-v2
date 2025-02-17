@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 
 public class AddAccountWindow extends AbstractWindow {
 
+    public static final String DEBUG_NAME = "AddAccountWindow";
+
     // Source Geo Location (default)
     public static final double LATITUDE = 6.34137;
     public static final double LONGITUDE = 124.72314;
@@ -70,18 +72,20 @@ public class AddAccountWindow extends AbstractWindow {
     private final SubscriptionController subscriptionController;
     private final TowerController towerController;
     private final CompositeDisposable disposables;
+    private final MainWindow mainWindow;
 
     // accountNo validation icons
     private final XCircleIcon xCircleIcon = new XCircleIcon(14);
     private final CheckCircleIcon checkCircleIcon = new CheckCircleIcon(14);
 
-    public AddAccountWindow(Database database, Stage owner) {
-        super("Add Account", AddAccountWindow.class.getResource("add_account.fxml"), null, owner);
+    public AddAccountWindow(Database database, MainWindow mainWindow) {
+        super("Add Account", AddAccountWindow.class.getResource("add_account.fxml"), null, mainWindow.getStage());
         dataPlanController = new DataPlanController(database);
         accountController = new AccountController(database);
         subscriptionController = new SubscriptionController(database);
         towerController = new TowerController(database);
         disposables = new CompositeDisposable();
+        this.mainWindow = mainWindow;
         this.database = database;
     }
 
@@ -130,6 +134,7 @@ public class AddAccountWindow extends AbstractWindow {
 
     private void loadData() {
         progressBar.setVisible(true);
+        mainWindow.printDebug(DEBUG_NAME, "Retrieving DataPlan & Tower entries...");
         disposables.add(Single.fromCallable(dataPlanController::getAll)
                 .flatMap(plans -> {
                     Platform.runLater(() -> cbDataPlans.setItems(plans));
@@ -139,19 +144,8 @@ public class AddAccountWindow extends AbstractWindow {
                     cbParentTower.setItems(towers);
                 }, err -> {
                     progressBar.setVisible(false);
+                    mainWindow.printErr(DEBUG_NAME, "Error while retrieving DataPlan and Tower entries.", err);
                     showErrorDialog("Database Error", "Error while retrieving Data Plan and Tower list.\n" + err);
-                }));
-    }
-
-    private void refreshDataPlans() {
-        progressBar.setVisible(true);
-        disposables.add(Single.fromCallable(dataPlanController::getAll)
-                .subscribeOn(Schedulers.io()).observeOn(JavaFxScheduler.platform()).subscribe(list -> {
-                    progressBar.setVisible(false);
-                    cbDataPlans.setItems(list);
-                }, err -> {
-                    progressBar.setVisible(false);
-                    showErrorDialog("Database Error", "Error while retrieving DataPlan entries.\n" + err);
                 }));
     }
 
@@ -189,6 +183,7 @@ public class AddAccountWindow extends AbstractWindow {
 
         if (accountValid && subscriptionValid && towerValid) {
             progressBar.setVisible(true);
+            mainWindow.printDebug(DEBUG_NAME, "Checking if account exists [" + tfAccountNo.getText() + "]");
             disposables.add(Single.fromCallable(() -> accountController.hasAccount(ViewUtils.normalize(tfAccountNo.getText())))
                     .subscribeOn(Schedulers.io()).observeOn(JavaFxScheduler.platform()).subscribe(hasAccount -> {
                         progressBar.setVisible(false);
@@ -198,6 +193,7 @@ public class AddAccountWindow extends AbstractWindow {
                         if (!hasAccount) saveAndClose();
                     }, err -> {
                         progressBar.setVisible(false);
+                        mainWindow.printErr(DEBUG_NAME, "Error while checking if account exists.", err);
                         showErrorDialog("Database Error", "Error while querying database.\n" + err);
                     }));
         }
@@ -216,12 +212,14 @@ public class AddAccountWindow extends AbstractWindow {
     }
 
     private void saveAndClose() {
+        mainWindow.printDebug(DEBUG_NAME, "Saving Account entry...");
         disposables.add(Single.fromCallable(() -> {
             Account account = getAccountInfo();
             boolean added = accountController.insert(account);
             return added ? account.getAccountNo() : "";
         }).flatMap(accountNo -> Single.fromCallable(() -> {
             if (!accountNo.isBlank() && cbAddSubscription.isSelected()) {
+                Platform.runLater(() -> mainWindow.printDebug(DEBUG_NAME, "Saving Subscription entry..."));
                 Subscription sub = getSubscriptionInfo();
                 sub.setAccountNo(accountNo);
                 subscriptionController.insert(sub);
@@ -229,6 +227,7 @@ public class AddAccountWindow extends AbstractWindow {
             return accountNo;
         })).flatMap(accountNo -> Single.fromCallable(() -> {
             if (!accountNo.isBlank() && cbAddTowerInfo.isSelected()) {
+                Platform.runLater(() -> mainWindow.printDebug(DEBUG_NAME, "Saving Tower entry..."));
                 Tower tower = getTowerInfo();
                 tower.setAccountNo(accountNo);
                 towerController.insert(tower);
@@ -236,10 +235,16 @@ public class AddAccountWindow extends AbstractWindow {
             return accountNo;
         })).subscribeOn(Schedulers.io()).observeOn(JavaFxScheduler.platform()).subscribe(accountNo -> {
             progressBar.setVisible(false);
-            if (accountNo.isBlank()) showWarningDialog("Add Account Failed", "Account No. is empty.");
+            if (accountNo.isBlank()) {
+                mainWindow.printWarning(DEBUG_NAME, "Failed to add Account entry.");
+                showWarningDialog("Add Account Failed", "Account No. is empty.");
+            } else {
+                mainWindow.printDebug(DEBUG_NAME, "Added Account entry successfully.");
+            }
             close();
         }, err -> {
             progressBar.setVisible(false);
+            mainWindow.printErr(DEBUG_NAME, "Error while adding Account entry.", err);
             showErrorDialog("Database Error", "Error while adding Account entry.\n" + err);
         }));
     }
@@ -333,6 +338,7 @@ public class AddAccountWindow extends AbstractWindow {
     }
 
     public void dispose() {
+        mainWindow.printDebug(DEBUG_NAME, "Disposing...");
         disposables.dispose();
     }
 }
