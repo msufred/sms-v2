@@ -32,6 +32,7 @@ public class MainWindow extends AbstractWindow {
     @FXML private MenuItem menuFileClose;
     @FXML private MenuItem menuShowDeleted;
     @FXML private MenuItem menuShowHistory;
+    @FXML private CheckMenuItem menuShowDebug;
     @FXML private MenuItem menuHelpAbout;
 
     @FXML private MenuButton btnUser;
@@ -55,6 +56,10 @@ public class MainWindow extends AbstractWindow {
 
     @FXML private ProgressBar progressBar;
     @FXML private Label progressLabel;
+
+    @FXML private SplitPane splitPane;
+    @FXML private TextArea console;
+    private SplitController splitController;
 
     private final AppMain appMain;
     private final Settings settings;
@@ -119,6 +124,10 @@ public class MainWindow extends AbstractWindow {
         menuShowHistory.setOnAction(evt -> {
             // TODO
         });
+        menuShowDebug.setOnAction(evt -> {
+            boolean isSelected = menuShowDebug.isSelected();
+            splitController.setTargetVisible(isSelected);
+        });
         menuHelpAbout.setOnAction(evt -> {
             // TODO
         });
@@ -135,6 +144,9 @@ public class MainWindow extends AbstractWindow {
             close();
             appMain.showLoginWindow();
         });
+
+        splitController = new SplitController(splitPane, SplitController.Target.LAST);
+        splitController.hideTarget();
     }
 
     public void setUserId(long id) {
@@ -230,6 +242,7 @@ public class MainWindow extends AbstractWindow {
         menuFilePreferences.setGraphic(new SettingsIcon(12));
         menuShowHistory.setGraphic(new TrashIcon(12));
         menuShowDeleted.setGraphic(new ClockIcon(12));
+        menuShowDebug.setGraphic(new CommandIcon(12));
         menuHelpAbout.setGraphic(new HelpCircleIcon(12));
 
         btnUser.setGraphic(new UserIcon(14));
@@ -307,5 +320,17 @@ public class MainWindow extends AbstractWindow {
 
     public User getUser() {
         return user;
+    }
+
+    public void printDebug(String debugName, String message) {
+        console.appendText(String.format("DEBUG: [%s] %s\n", debugName, message));
+    }
+
+    public void printErr(String debugName, String message, Throwable err) {
+        console.appendText(String.format("ERROR: %s\n\t[Throwable: [%s] %s]", debugName, message, err));
+    }
+
+    public void printWarning(String debugName, String message) {
+        console.appendText(String.format("WARNING: [%s] %s\n", debugName, message));
     }
 }
