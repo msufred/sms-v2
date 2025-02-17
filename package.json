@@ -19,14 +19,14 @@
         ],
         "jar": "target\\sms-2.0.0-SNAPSHOT.jar",
         "javafx": true,
-        "title": "sms"
+        "title": "sms-v2"
     },
     "dependencies": {
         "njre": "^0.2.0",
         "shelljs": "^0.8.4"
     },
     "license": "ISC",
-    "name": "sms",
+    "name": "sms-v2",
     "files": ["jdeploy-bundle"],
     "scripts": {"test": "echo \"Error: no test specified\" && exit 1"}
 }

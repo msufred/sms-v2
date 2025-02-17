@@ -35,8 +35,7 @@ public class AppMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // removed for now, overlaps with jDeploy's splash screen window
-        // splashWindow = new SplashWindow();
+        splashWindow = new SplashWindow();
 
         final Service<Void> startUp = new Service<Void>() {
             @Override
@@ -62,7 +61,7 @@ public class AppMain extends Application {
 
         startUp.setOnSucceeded(evt -> {
             System.out.println("Startup succeeded!");
-            // splashWindow.close();
+            splashWindow.close();
             try {
                 settings = new Settings(Utils.SETTINGS_PATH);
 
@@ -90,7 +89,7 @@ public class AppMain extends Application {
             }
         });
 
-        // splashWindow.show();
+        splashWindow.show();
         startUp.start();
     }
 
